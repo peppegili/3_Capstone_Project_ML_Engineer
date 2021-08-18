@@ -150,6 +150,8 @@ Best run Accuracy: 0.866126126126126
 Metrics:  {'matthews_correlation': 0.6871372145654745, 'norm_macro_recall': 0.6531370759654658, 'average_precision_score_macro': 0.8827546675215476, 'recall_score_micro': 0.866126126126126, 'f1_score_micro': 0.866126126126126, 'AUC_weighted': 0.9111851379683301, 'precision_score_macro': 0.8620010449320794, 'recall_score_weighted': 0.866126126126126, 'AUC_micro': 0.9141805372940508, 'precision_score_weighted': 0.8718187513532341, 'accuracy': 0.866126126126126, 'f1_score_macro': 0.8354493907625058, 'precision_score_micro': 0.866126126126126, 'weighted_accuracy': 0.8929963269988462, 'recall_score_macro': 0.8265685379827329, 'f1_score_weighted': 0.8610660544772686, 'AUC_macro': 0.91118513796833, 'log_loss': 0.4219576391808034, 'balanced_accuracy': 0.8265685379827329, 'average_precision_score_micro': 0.9156178252623035, 'average_precision_score_weighted': 0.9123732365805568, 'accuracy_table': 'aml://artifactId/ExperimentRun/dcid.AutoML_082e177e-f879-4eb9-ba30-bdc8979214da_38/accuracy_table', 'confusion_matrix': 'aml://artifactId/ExperimentRun/dcid.AutoML_082e177e-f879-4eb9-ba30-bdc8979214da_38/confusion_matrix'}
 ```
 
+![AutoML Best Model Id](./img/automl_best_model_id.png)
+
 The pipeline has been completed in 33m 18s.
 
 ![AutoML Experiment Completed](./img/automl_experiment_completed.png)
@@ -230,6 +232,8 @@ Best run ID: HD_7376bf17-426c-430a-999e-9f35bdb293c8_5
 Best run Accuracy: 0.7833333333333333
 Metrics:  {'Regularization Strength:': 0.3438062646130631, 'Max iterations:': 25, 'Accuracy': 0.7833333333333333}
 ```
+
+![Hyperdrive Best Model Id](./img/hyperdrive_best_model_id.png)
 
 The pipeline has been completed in 09m 37s.
 
