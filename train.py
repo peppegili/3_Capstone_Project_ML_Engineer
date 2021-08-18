@@ -50,8 +50,8 @@ def main():
 
 
 # Create TabularDataset using TabularDatasetFactory
-data_path = "https://github.com/peppegili/" \
-            "3_Capstone_Project_ML_Engineer/blob/master/" \
+data_path = "https://raw.githubusercontent.com/peppegili/" \
+            "3_Capstone_Project_ML_Engineer/master/" \
             "data/heart_failure_clinical_records_dataset.csv"
 ds = TabularDatasetFactory.from_delimited_files(path=data_path)
 
