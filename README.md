@@ -176,7 +176,7 @@ The experiment run with `RunDetails` has been reported below:
 
 ![AutoML Rundetails completed](./img/automl_rundetails_completed.png)
 
-All the others screenshots of the experiment have been store [here](./img).
+All the others screenshots of the experiment have been stored [here](./img).
 
 *TODO* add how could you have improved it?
 
@@ -237,9 +237,11 @@ The pipeline has been completed in 09m 37s.
   - `max_iter` = 25
 - ***Accuracy***: 0.7833333333333333
 
-*TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+The experiment run with `RunDetails` has been reported below:
 
-Some screenshots of the experiment have been store [here](./img).
+![Hyperdrive Rundetails completed](./img/hyperdrive_rundetails_completed.png)
+
+All the other screenshots of the experiment have been stored [here](./img).
 
 *TODO* add how could you have improved it?
 
