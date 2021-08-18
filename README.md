@@ -222,20 +222,20 @@ print('Best run Accuracy: ', best_run_metrics_hdr['Accuracy'])
 print('Metrics: ', best_run_metrics_hdr)
 ```
 ```python
-Best run ID: HD_d4628b90-0e0d-4602-b36f-903f7ea498ec_2
-Best run Accuracy: 0.90
-Metrics: {'Regularization Strength:': 0.50, 'Max iterations:': 25, 'Accuracy': 0.90}
+Best run ID: HD_7376bf17-426c-430a-999e-9f35bdb293c8_5
+Best run Accuracy: 0.7833333333333333
+Metrics:  {'Regularization Strength:': 0.3438062646130631, 'Max iterations:': 25, 'Accuracy': 0.7833333333333333}
 ```
 
-The pipeline has been completed in 10m 20s.
+The pipeline has been completed in 09m 37s.
 
 ![Hyperdrive Experiment](./img/hyperdrive_experiment.png)
 
 #### Best Model
 - ***Parameters***
-  - `C` = 0.50
-  - `max_iter` = 20
-- ***Accuracy***: 0.90
+  - `C` = 0.3438062646130631
+  - `max_iter` = 25
+- ***Accuracy***: 0.7833333333333333
 
 *TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
 
@@ -245,10 +245,10 @@ Some screenshots of the experiment have been store [here](./img).
 
 ## Model Deployment
 Comparing the performances (accuracy) of the two approaches, we have obtained:
-- `AutoML`: 0.94
-- `HyperDrive`: 0.90
+- `AutoML`: 0.87
+- `HyperDrive`: 0.78
 
-AutoML model performs slightly better than HyperDrive one.\
+AutoML model performs better than HyperDrive one.\
 For this reason the AutoML best model has been deployed to *Azure Container Instance*
 
 ## Screen Recording
