@@ -14,14 +14,16 @@ The project contains the following files:
 - `automl.ipynb`: jupyter notebook used to perform *AutoML*
 - `train.py`: python script used for hyperparameters tuning, containing logistic regression model
 - `endpoint.py`: python script used to interact with the deployed model
+- `score.py`:
 - `img`: folder containing all the screenshots produced during the experiments
 - `data`: folder containing `heart_failure_clinical_records_dataset.csv`, the dataset used in the project
+- `outputs`: folder containing the HyperDrive and AutoML trained best models
 
 To run the project:
-1. Run the `hyperparameter_tuning.ipynb` notebook to find the best model with *HyperDrive*
-2. Run the `automl.ipynb` notebook to find the best model with *AutoML*
+1. Run the `hyperparameter_tuning.ipynb` notebook, before the *Model Deployment* section, to find the best model with *HyperDrive*
+2. Run the `automl.ipynb` notebook, before the *Model Deployment* section, to find the best model with *AutoML*
 3. Compare the two model accuracy, and choose the best performing one
-4. Deploy the best model identified at the above step, running the cells of the best model notebook
+4. Deploy the best model identified at the above step, running the remaining cells of the best model notebook, starting from *Model Deployment* cell
 
 ## Table of Contents
 - [Project Overview](#project-overview)
@@ -172,7 +174,7 @@ The best model was **VotingEnsemble** with:
 
 - ***Accuracy***: 0.866126126126126
 
-The experiment run with `RunDetails` has been reported below:
+The experiment run with `RunDetails` widget has been reported below:
 
 ![AutoML Rundetails completed](./img/automl_rundetails_completed.png)
 
@@ -229,6 +231,8 @@ Metrics:  {'Regularization Strength:': 0.3438062646130631, 'Max iterations:': 25
 
 The pipeline has been completed in 09m 37s.
 
+![Hyperdrive Experiment Completed](./img/hyperdrive_experiment_completed.png)
+
 ![Hyperdrive Experiment](./img/hyperdrive_experiment.png)
 
 #### Best Model
@@ -237,7 +241,7 @@ The pipeline has been completed in 09m 37s.
   - `max_iter` = 25
 - ***Accuracy***: 0.7833333333333333
 
-The experiment run with `RunDetails` has been reported below:
+The experiment run with `RunDetails` widget has been reported below:
 
 ![Hyperdrive Rundetails completed](./img/hyperdrive_rundetails_completed.png)
 
@@ -250,8 +254,79 @@ Comparing the performances (accuracy) of the two approaches, we have obtained:
 - `AutoML`: 0.87
 - `HyperDrive`: 0.78
 
-AutoML model performs better than HyperDrive one.\
-For this reason the AutoML best model has been deployed to *Azure Container Instance*
+AutoML model performed better than HyperDrive one.\
+For this reason the AutoML best model has been deployed to *Azure Container Instance* as a web service.\
+The deployment process followed these steps:
+- **Register the model**: the best model has been uploaded to the cloud (in the workspace's default storage account)
+![Registered Model](./img/registered_model.png)
+
+- **Prepare an entry script**: the `score.py` entry script receives data submitted to a deployed web service and passes it to the model. It then returns the model's response to the client
+- **Prepare an inference configuration**: an inference configuration describes the Docker container and files to use when initializing your web service.\
+The configuration below specifies that the machine learning deployment will use the `score.py` to process the incoming requests with the specified Python packages
+```python
+inference_config = InferenceConfig(entry_script='score.py', environment=best_run_automl.get_environment())
+```
+- **Choose a computer target**: the computer target used to host the model (`Azure Container Instance`)
+```python
+aci_deployment_config = AciWebservice.deploy_configuration(cpu_cores=1,
+                                                           memory_gb=1,
+                                                           auth_enabled=True,
+                                                           enable_app_insights=True,
+                                                           description='AutoML model deploy')
+```
+- **Deploy the model**: using the above configurations
+```python
+service = Model.deploy(workspace=ws,
+                       name=service_name,
+                       models=[model],
+                       inference_config=inference_config,
+                       deployment_config=aci_deployment_config,
+                       overwrite=True
+                      )
+```
+![Endpoint](./img/endpoint.png)
+Once the model has been deployed ("Deployment state" has become Healthy), a REST endpoint has been generated:
+![Endpoint Completed](./img/endpoint_completed.png)
+
+- **Test the resulting web service**: once deployment has been completed, the deployed service can be consumed via an HTTP API, sending `POST` requests to the web service
+```python
+# URL for the web service
+scoring_uri = str(service.scoring_uri)
+# If the service is authenticated, set the key or token
+primary, secondary = service.get_keys()
+key = str(primary)
+# Two sets of data to score, so we get two results back
+data = {"data":
+        [
+          {
+            'age': 50.0,
+            'anaemia': 1,
+            'creatinine_phosphokinase': 230,
+            'diabetes': 0,
+            'ejection_fraction': 38,
+            'high_blood_pressure': 1,
+            'platelets': 390000.0,
+            'serum_creatinine': 1.8,
+            'serum_sodium': 135,
+            'sex': 1,
+            'smoking': 0,
+            'time': 14
+          }
+    ]
+}
+# Convert to JSON string
+input_data = json.dumps(data)
+with open("data.json", "w") as _f:
+    _f.write(input_data)
+# Set the content type
+headers = {'Content-Type': 'application/json'}
+# If authentication is enabled, set the authorization header
+headers['Authorization'] = f'Bearer {key}'
+# Make the request and display the response
+resp = requests.post(scoring_uri, input_data, headers=headers)
+print(resp.text)
+print(resp.json())
+```
 
 ## Screen Recording
 [Link]() to the video
