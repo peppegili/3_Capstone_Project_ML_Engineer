@@ -14,7 +14,8 @@ The project contains the following files:
 - `automl.ipynb`: jupyter notebook used to perform *AutoML*
 - `train.py`: python script used for hyperparameters tuning, containing logistic regression model
 - `endpoint.py`: python script used to interact with the deployed model
-- `score.py`:
+- `score.py`: python entry script
+- `data.json`: payload
 - `img`: folder containing all the screenshots produced during the experiments
 - `data`: folder containing `heart_failure_clinical_records_dataset.csv`, the dataset used in the project
 - `outputs`: folder containing the HyperDrive and AutoML trained best models
@@ -180,7 +181,8 @@ The experiment run with `RunDetails` widget has been reported below:
 
 All the others screenshots of the experiment have been stored [here](./img).
 
-*TODO* add how could you have improved it?
+The results could be further improved by increasing the `experiment_timeout_minutes`. For this experiment it has been set to 20, and some runs have been canceled for this reason. It could be interesting trying to increase this value.\
+It could be interesting try to validate more metrics, i.e. AUC, or create and investigate new predictive features, in order to increase the performances.
 
 ## Hyperparameter Tuning
 In this task, an `HyperDrive` pipeline using a customized model is built.\
@@ -247,7 +249,7 @@ The experiment run with `RunDetails` widget has been reported below:
 
 All the other screenshots of the experiment have been stored [here](./img).
 
-*TODO* add how could you have improved it?
+The results could be improved by trying different models, i.e. neural network (non trivial choice with a small dataset as in this case), or use a more exhaustive parameter sampler for hyperparameters tuning, i.e. grid sampling or try to increase the search space.
 
 ## Model Deployment
 Comparing the performances (accuracy) of the two approaches, we have obtained:
@@ -285,17 +287,19 @@ service = Model.deploy(workspace=ws,
                       )
 ```
 ![Endpoint](./img/endpoint.png)
-Once the model has been deployed ("Deployment state" has become Healthy), a REST endpoint has been generated:
+Once the model has been deployed ("Deployment state" has become Healthy), a REST endpoint and a Swagger URI have been generated:
 ![Endpoint Completed](./img/endpoint_completed.png)
+![Endpoint Completed2](./img/endpoint_completed2.png)
 
-- **Test the resulting web service**: once deployment has been completed, the deployed service can be consumed via an HTTP API, sending `POST` requests to the web service
+- **Test the resulting web service**: once deployment has been completed, the deployed service can be consumed via an HTTP API, sending `POST` requests to the web service, using `endpoint.py` script:
 ```python
+import requests
+import json
 # URL for the web service
-scoring_uri = str(service.scoring_uri)
+scoring_uri = 'http://c55aee43-1cff-46b2-b394-95a2e22cedbe.southcentralus.azurecontainer.io/score'
 # If the service is authenticated, set the key or token
-primary, secondary = service.get_keys()
-key = str(primary)
-# Two sets of data to score, so we get two results back
+key = 'jPDSVdsJV9nUeE6Jafq3mcIMtc64hAXQ'
+# A set of data to score, so we get one results back
 data = {"data":
         [
           {
@@ -324,16 +328,12 @@ headers = {'Content-Type': 'application/json'}
 headers['Authorization'] = f'Bearer {key}'
 # Make the request and display the response
 resp = requests.post(scoring_uri, input_data, headers=headers)
-print(resp.text)
 print(resp.json())
 ```
 
 ## Screen Recording
-[Link]() to the video
+[Link](https://drive.google.com/file/d/1D3-REJ764qMUr2Tvbqr6QxlH6nlt6P4k/view?usp=sharing) to the video
 
 ## Future Work
-- Try to run HyperDrive with a more exhaustive parameter sampler for hyperparameters tuning, i.e. grid sampling, or try to increase the search space
-- Try to validate more metrics, i.e. AUC
-- Try to use different customized models, i.e. neural network (non trivial choice with a small dataset)
-- Try to work more in depth in feature engineering process, creating and investigating new predictive features
-- Show model output using an user friendly dashboard
+All possible improvements have been discussed in the respective sections above.\
+Overall, a nice feature to implement could be an user friendly dashboard to show models output
