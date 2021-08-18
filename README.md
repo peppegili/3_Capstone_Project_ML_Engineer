@@ -142,9 +142,9 @@ print('Best run Accuracy: ', best_run_metrics_automl['Accuracy'])
 print('Metrics: ', best_run_metrics_automl)
 ```
 ```
-Best run ID: AutoML_5ab60472-18a9-4ec1-97c9-b43685d2a6dd_29
-Best run Accuracy: 0.9190440060698029
-Metrics: {'f1_score_macro': 0.7939297719210586, 'recall_score_micro': 0.9190440060698029, 'matthews_correlation': 0.5881065523806792, 'norm_macro_recall': 0.581082337069211, 'AUC_micro': 0.9808406538623611, 'precision_score_weighted': 0.9182078162705778, 'precision_score_macro': 0.7976971592815697, 'recall_score_weighted': 0.9190440060698029, 'AUC_weighted': 0.9481838936880631, 'recall_score_macro': 0.7905411685346055, 'balanced_accuracy': 0.7905411685346055, 'f1_score_weighted': 0.9185753244363074, 'f1_score_micro': 0.9190440060698029, 'weighted_accuracy': 0.9509449763133989, 'log_loss': 0.22503428584436114, 'average_precision_score_weighted': 0.9560620267940345, 'AUC_macro': 0.948183893688063, 'accuracy': 0.9190440060698029, 'average_precision_score_micro': 0.9815596471253963, 'average_precision_score_macro': 0.8271358405542905, 'precision_score_micro': 0.9190440060698029, 'confusion_matrix': 'aml://artifactId/ExperimentRun/dcid.AutoML_5ab60472-18a9-4ec1-97c9-b43685d2a6dd_29/confusion_matrix', 'accuracy_table': 'aml://artifactId/ExperimentRun/dcid.AutoML_5ab60472-18a9-4ec1-97c9-b43685d2a6dd_29/accuracy_table'}
+Best run ID: AutoML_082e177e-f879-4eb9-ba30-bdc8979214da_38
+Best run Accuracy: 0.866126126126126
+Metrics:  {'matthews_correlation': 0.6871372145654745, 'norm_macro_recall': 0.6531370759654658, 'average_precision_score_macro': 0.8827546675215476, 'recall_score_micro': 0.866126126126126, 'f1_score_micro': 0.866126126126126, 'AUC_weighted': 0.9111851379683301, 'precision_score_macro': 0.8620010449320794, 'recall_score_weighted': 0.866126126126126, 'AUC_micro': 0.9141805372940508, 'precision_score_weighted': 0.8718187513532341, 'accuracy': 0.866126126126126, 'f1_score_macro': 0.8354493907625058, 'precision_score_micro': 0.866126126126126, 'weighted_accuracy': 0.8929963269988462, 'recall_score_macro': 0.8265685379827329, 'f1_score_weighted': 0.8610660544772686, 'AUC_macro': 0.91118513796833, 'log_loss': 0.4219576391808034, 'balanced_accuracy': 0.8265685379827329, 'average_precision_score_micro': 0.9156178252623035, 'average_precision_score_weighted': 0.9123732365805568, 'accuracy_table': 'aml://artifactId/ExperimentRun/dcid.AutoML_082e177e-f879-4eb9-ba30-bdc8979214da_38/accuracy_table', 'confusion_matrix': 'aml://artifactId/ExperimentRun/dcid.AutoML_082e177e-f879-4eb9-ba30-bdc8979214da_38/confusion_matrix'}
 ```
 
 The pipeline has been completed in 33m 18s.
@@ -156,25 +156,27 @@ The pipeline has been completed in 33m 18s.
 
 The best model was **VotingEnsemble** with:
 - ***Parameters***
-  - `max_iter` = 1000
-  - `n_jobs` = 1
-  - `penalty` = none
-  - `tol` = 0.0001
+  - `reg_alpha` = 2.3958333333333335
+  - `reg_lambda` = 1.5625
+  - `subsample` = 0.5
   - ...
 
   The complete information has been reported below:
   ```
   Pipeline(memory=None,
-       steps=[('datatransformer',
-               DataTransformer(enable_dnn=False, enable_feature_sweeping=True, feature_sweeping_config={}, feature_sweeping_timeout=86400, featurization_config=None, force_text_dnn=False, is_cross_validation=True, is_onnx_compatible=False, observer=None, task='classification', working_dir='/mnt/batch/tasks/shared/LS_root/mount...), random_state=None, reg_alpha=0.3157894736842105, reg_lambda=0.8421052631578947, subsample=1))], verbose=False)), ('13', Pipeline(memory=None, steps=[('maxabsscaler', MaxAbsScaler(copy=True)), ('sgdclassifierwrapper', SGDClassifierWrapper(alpha=7.5510448979591835, class_weight='balanced', eta0=0.001, fit_intercept=True, l1_ratio=0.42857142857142855, learning_rate='constant', loss='modified_huber', max_iter=1000, n_jobs=1, penalty='none', power_t=0.7777777777777777, random_state=None, tol=0.0001))], verbose=False)), ('20', Pipeline(memory=None, steps=[('truncatedsvdwrapper', TruncatedSVDWrapper(n_components=0.7026315789473684, random_state=None)), ('randomforestclassifier', RandomForestClassifier(bootstrap=False, ccp_alpha=0.0, class_weight='balanced', criterion='gini', max_depth=None, max_features='log2', max_leaf_nodes=None, max_samples=None, min_impurity_decrease=0.0, min_impurity_split=None, min_samples_leaf=0.01, min_samples_split=0.01, min_weight_fraction_leaf=0.0, n_estimators=200, n_jobs=1, oob_score=False, random_state=None, verbose=0, warm_start=False))], verbose=False)), ('19', Pipeline(memory=None, steps=[('truncatedsvdwrapper', TruncatedSVDWrapper(n_components=0.8015789473684211, random_state=None)), ('randomforestclassifier', RandomForestClassifier(bootstrap=False, ccp_alpha=0.0, class_weight='balanced', criterion='entropy', max_depth=None, max_features='sqrt', max_leaf_nodes=None, max_samples=None, min_impurity_decrease=0.0, min_impurity_split=None, min_samples_leaf=0.035789473684210524, min_samples_split=0.15052631578947367, min_weight_fraction_leaf=0.0, n_estimators=100, n_jobs=1, oob_score=False, random_state=None, verbose=0, warm_start=False))], verbose=False))], flatten_transform=None, weights=[0.26666666666666666, 0.06666666666666667, 0.06666666666666667, 0.06666666666666667, 0.13333333333333333, 0.13333333333333333, 0.06666666666666667, 0.06666666666666667, 0.06666666666666667, 0.06666666666666667]))],
-       verbose=False)
+         steps=[('datatransformer',
+                 DataTransformer(enable_dnn=False, enable_feature_sweeping=True, feature_sweeping_config={}, feature_sweeping_timeout=86400, featurization_config=None,                              force_text_dnn=False, is_cross_validation=True, is_onnx_compatible=False, observer=None, task='classification',                                                                    working_dir='/mnt/batch/tasks/shared/LS_root/mount...
+                 ), random_state=0, reg_alpha=2.3958333333333335, reg_lambda=1.5625, subsample=0.5, tree_method='auto'))], verbose=False))], flatten_transform=None, weights=                        [0.09090909090909091,   0.18181818181818182, 0.09090909090909091, 0.09090909090909091, 0.09090909090909091, 0.09090909090909091, 0.09090909090909091,                               0.09090909090909091, 0.09090909090909091, 0.09090909090909091]))],
+         verbose=False)
   ```
 
-- ***Accuracy***: 0.91
+- ***Accuracy***: 0.866126126126126
 
-*TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+The experiment run with `RunDetails` has been reported below:
 
-Some screenshots of the experiment have been store [here](./img).
+![AutoML Rundetails completed](./img/automl_rundetails_completed.png)
+
+All the others screenshots of the experiment have been store [here](./img).
 
 *TODO* add how could you have improved it?
 
