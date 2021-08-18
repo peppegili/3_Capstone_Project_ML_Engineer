@@ -36,7 +36,7 @@ To run the project:
 - [Automated ML](#automated-ml)
   - [Results](#results)
 - [Hyperparameter Tuning](#hyperparameter-tuning)
-  - [Results](#results)
+  - [Results](#results-hdr)
 - [Model Deployment](#model-deployment)
 - [Screen Recording](#screen-recording)
 - [Future Work](#future-work)
@@ -214,7 +214,7 @@ param_sampling = RandomParameterSampling(
 early_termination_policy = BanditPolicy(evaluation_interval=2, slack_factor=0.1)
 ```
 
-### Results
+### Results <a name="results-hdr"></a>
 Once the HyperDrive run has been submitted to the experiment, the best run and the related metrics have been collected:
 ```python
 best_run_hdr = hdr.get_best_run_by_primary_metric()
